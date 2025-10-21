@@ -46,23 +46,40 @@ Add to your target:
 
 ## 🚀 Usage
 
-### Quick Start (Example with Veilo App)
+### Quick Start
 
 ```swift
 import SafariContentBlockerKit
 
-// 1. Create configuration using predefined Veilo preset
-let configuration = ContentBlockerConfiguration.veilo(
-    appGroupID: "group.com.yourapp.adblocker"
+// 1. Define your rule sets
+let ruleSets = [
+    RuleSetType(
+        identifier: "adblock",
+        extensionBundleID: "com.yourapp.extension.adblocker",
+        sourceFileName: "adblock_rules_adBlock",
+        outputFileName: "adBlock"
+    ),
+    RuleSetType(
+        identifier: "privacy",
+        extensionBundleID: "com.yourapp.extension.privacy",
+        sourceFileName: "adblock_rules_privacy",
+        outputFileName: "privacy"
+    )
+]
+
+// 2. Create configuration
+let configuration = ContentBlockerConfiguration(
+    appGroupID: "group.com.yourapp.adblocker",
+    ruleSets: ruleSets
 )
 
-// 2. Initialize service
+// 3. Initialize service
 let contentBlockerService = ContentBlockerService(configuration: configuration)
 
-// 3. Enable content blocking
+// 4. Enable content blocking
 let success = await contentBlockerService.applyBlockingState(true)
 
-// 4. Preload rules cache (optional, for onboarding)
+// 5. Preload rules cache (optional, for onboarding)
 await contentBlockerService.convertAndSaveAllRules()
 ```
 
@@ -247,13 +264,7 @@ Task(priority: .utility) {
 
 ### Rule Set Examples
 
-**Predefined Veilo rule sets** (ready to use):
-```swift
-let ruleSets = RuleSetType.veiloRuleSets()
-// Includes: adBlock, privacy, banners, trackers, advanced, basic
-```
-
-**Custom sets:**
+**Custom rule sets:**
 ```swift
 let customSets = [
     RuleSetType(
@@ -261,8 +272,19 @@ let customSets = [
         extensionBundleID: "com.app.social",
         sourceFileName: "social_rules",
         outputFileName: "social"
+    ),
+    RuleSetType(
+        identifier: "annoyances",
+        extensionBundleID: "com.app.annoyances",
+        sourceFileName: "annoyances_rules",
+        outputFileName: "annoyances"
     )
 ]
+
+let configuration = ContentBlockerConfiguration(
+    appGroupID: "group.com.app",
+    ruleSets: customSets
+)
 ```
 
 ### Error Handling

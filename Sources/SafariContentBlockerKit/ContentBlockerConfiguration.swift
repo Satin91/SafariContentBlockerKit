@@ -44,4 +44,3 @@ public struct ContentBlockerConfiguration {
         self.maxJsonSizeBytes = maxJsonSizeBytes
     }
 }
-
