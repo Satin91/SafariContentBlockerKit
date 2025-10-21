@@ -392,7 +392,6 @@ Special thanks to the AdGuard Team for their excellent [SafariConverterLib](http
 ## 📚 Related Projects
 
 - [AdguardTeam/SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib) - Original macOS library
-- [Veilo](https://github.com/Satin91/Veilo) - iOS app using SafariContentBlockerKit
 
 ---
 
