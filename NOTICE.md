@@ -2,7 +2,7 @@
 
 ## SafariConverterLib
 
-VeiloKit includes modified code from the **SafariConverterLib** project.
+SafariContentBlockerKit includes modified code from the **SafariConverterLib** project.
 
 - **Original Project**: [AdguardTeam/SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib)
 - **Original License**: MIT License
@@ -24,7 +24,7 @@ The following modifications were made to adapt the code for iOS:
    - Created universal configuration system
 
 3. **File Changes**:
-   - All files under `Sources/VeiloKit/ContentBlocker/` - iOS compatibility updates
+   - All files under `Sources/SafariContentBlockerKit/ContentBlocker/` - iOS compatibility updates
    - Added `ContentBlockerService.swift` - Universal service layer
    - Added `RuleSetType.swift` - Flexible rule set management
    - Added `ContentBlockerConfiguration.swift` - Configuration system
@@ -60,16 +60,16 @@ SOFTWARE.
 
 ---
 
-## VeiloKit Original Components
+## SafariContentBlockerKit Original Components
 
-The following components are original work created for VeiloKit:
+The following components are original work created for SafariContentBlockerKit:
 
 - **BackgroundTaskService.swift** - Original work by Артур Кулик
 - **ContentBlockerService.swift** - Original work by Артур Кулик (uses AdGuard converter)
 - **RuleSetType.swift** - Original work by Артур Кулик
 - **ContentBlockerConfiguration.swift** - Original work by Артур Кулик
 - **ContentBlockerError.swift** - Original work by Артур Кулик
-- **VeiloKit.swift** - Original work by Артур Кулик
+- **SafariContentBlockerKit.swift** - Original work by Артур Кулик
 
 These components are also licensed under the MIT License (see LICENSE file).
 

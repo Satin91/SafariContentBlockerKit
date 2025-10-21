@@ -1,4 +1,4 @@
-# VeiloKit
+# SafariContentBlockerKit
 
 Swift Package with universal utilities and content blocking services for iOS Safari extensions.
 
@@ -25,14 +25,14 @@ Swift Package with universal utilities and content blocking services for iOS Saf
 
 #### Via Xcode:
 1. File → Add Package Dependencies...
-2. Enter: `https://github.com/YOUR_USERNAME/VeiloKit.git`
+2. Enter: `https://github.com/YOUR_USERNAME/SafariContentBlockerKit.git`
 3. Select version (recommended: "Up to Next Major Version")
 4. Add Package
 
 #### Via Package.swift:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/YOUR_USERNAME/VeiloKit.git", from: "1.0.0")
+    .package(url: "https://github.com/YOUR_USERNAME/SafariContentBlockerKit.git", from: "1.0.0")
 ]
 ```
 
@@ -40,7 +40,7 @@ Add to your target:
 ```swift
 .target(
     name: "YourTarget",
-    dependencies: ["VeiloKit"]
+    dependencies: ["SafariContentBlockerKit"]
 )
 ```
 
@@ -49,7 +49,7 @@ Add to your target:
 ### Quick Start for Veilo App
 
 ```swift
-import VeiloKit
+import SafariContentBlockerKit
 
 // 1. Create configuration
 let configuration = ContentBlockerConfiguration.veilo(
@@ -69,7 +69,7 @@ await contentBlockerService.convertAndSaveAllRules()
 ### Custom Configuration
 
 ```swift
-import VeiloKit
+import SafariContentBlockerKit
 
 // Define your custom rule sets
 let customRuleSets = [
@@ -103,7 +103,7 @@ let service = ContentBlockerService(configuration: configuration)
 Manage critical operations that need to complete even when app is backgrounded:
 
 ```swift
-import VeiloKit
+import SafariContentBlockerKit
 
 class MyRepository {
     private let backgroundTaskService = BackgroundTaskService()
@@ -123,7 +123,7 @@ class MyRepository {
 ### ContentBlockerConverter (Direct Usage)
 
 ```swift
-import VeiloKit
+import SafariContentBlockerKit
 
 let converter = ContentBlockerConverter()
 let rules = [
@@ -299,7 +299,7 @@ Special thanks to the AdGuard Team for their excellent [SafariConverterLib](http
 ## 📚 Related Projects
 
 - [AdguardTeam/SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib) - Original macOS library
-- [Veilo](https://github.com/YOUR_USERNAME/Veilo) - iOS app using VeiloKit
+- [Veilo](https://github.com/YOUR_USERNAME/Veilo) - iOS app using SafariContentBlockerKit
 
 ---
 
@@ -338,7 +338,7 @@ For more examples and detailed documentation, see:
 
 ## 🔄 Versioning
 
-We use [Semantic Versioning](http://semver.org/). For available versions, see the [tags on this repository](https://github.com/YOUR_USERNAME/VeiloKit/tags).
+We use [Semantic Versioning](http://semver.org/). For available versions, see the [tags on this repository](https://github.com/YOUR_USERNAME/SafariContentBlockerKit/tags).
 
 Current version: **1.0.0**
 

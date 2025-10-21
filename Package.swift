@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "VeiloKit",
+    name: "SafariContentBlockerKit",
     platforms: [
         .iOS(.v15),
         .macOS(.v12)
@@ -12,8 +12,8 @@ let package = Package(
     products: [
         // Products define the executables and libraries a package produces
         .library(
-            name: "VeiloKit",
-            targets: ["VeiloKit"]),
+            name: "SafariContentBlockerKit",
+            targets: ["SafariContentBlockerKit"]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on
@@ -22,11 +22,11 @@ let package = Package(
     targets: [
         // Targets are the basic building blocks of a package
         .target(
-            name: "VeiloKit",
+            name: "SafariContentBlockerKit",
             dependencies: [
                 .product(name: "Punycode", package: "PunycodeSwift")
             ],
-            path: "Sources/VeiloKit",
+            path: "Sources/SafariContentBlockerKit",
             resources: [
                 .copy("ContentBlocker/Resources")
             ]
