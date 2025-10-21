@@ -37,14 +37,14 @@ public class ContentBlockerService {
     }
     
     /// Get file URL for specific rule set
-    public func getFileURL(for ruleSet: RuleSetType) -> URL? {
+    public func getFileURL<T: RuleSetType>(for ruleSet: T) -> URL? {
         return ruleSet.getOutputFilePath()
     }
     
     /// Find rule set by extension bundle ID
     /// - Parameter bundleID: Safari extension bundle identifier
     /// - Returns: Matching RuleSetType or nil
-    public func ruleSet(forBundleID bundleID: String) -> RuleSetType? {
+    public func ruleSet(forBundleID bundleID: String) -> (any RuleSetType)? {
         return configuration.ruleSets.first { $0.extensionBundleID == bundleID }
     }
     
@@ -53,7 +53,7 @@ public class ContentBlockerService {
     public func getFileURLForCurrentExtension() -> URL? {
         guard let bundleID = Bundle.main.bundleIdentifier else { return nil }
         guard let ruleSet = ruleSet(forBundleID: bundleID) else { return nil }
-        return getFileURL(for: ruleSet)
+        return ruleSet.getOutputFilePath()
     }
     
     /// Apply or remove blocking rules
@@ -109,7 +109,7 @@ public class ContentBlockerService {
         await reloadExtensions(maxRetries: 3)
     }
     
-    private func convertAndSaveRules(for ruleSet: RuleSetType) async {
+    private func convertAndSaveRules<T: RuleSetType>(for ruleSet: T) async {
         guard let sourcePath = ruleSet.getSourceFilePath(in: configuration.sourceBundle) else {
             return
         }
@@ -135,7 +135,7 @@ public class ContentBlockerService {
     
     // MARK: - Cache Management
     
-    private func upsertRuleInCache(_ jsonRule: String, for ruleSet: RuleSetType) {
+    private func upsertRuleInCache<T: RuleSetType>(_ jsonRule: String, for ruleSet: T) {
         var cached = loadCachedRules() ?? []
         
         let requiredCount = configuration.ruleSets.count
