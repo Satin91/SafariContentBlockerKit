@@ -17,17 +17,21 @@ import Foundation
 ///     case adBlock
 ///     case privacy
 ///     
+///     var groupID: String { "group.com.app" }
 ///     var identifier: String { rawValue }
 ///     var extensionBundleID: String {
-///         switch self {
-///         case .adBlock: return "com.app.adblocker"
-///         case .privacy: return "com.app.privacy"
-///         }
+///         "com.app.extension.\(rawValue)"
 ///     }
-///     // ... implement other properties
+///     var sourceFileName: String {
+///         "adblock_rules_\(rawValue)"
+///     }
+///     var outputFileName: String { rawValue }
 /// }
 /// ```
-public protocol RuleSetType {
+public protocol RuleSetType: Equatable {
+    /// App Group identifier for shared container
+    var groupID: String { get }
+    
     /// Unique identifier for this rule set
     var identifier: String { get }
     
@@ -43,72 +47,35 @@ public protocol RuleSetType {
     var outputFileName: String { get }
 }
 
-// MARK: - Helper Methods
+// MARK: - Extension Methods
 
 public extension RuleSetType {
-    /// Get file path in App Group container
-    /// - Parameter groupID: App Group identifier
-    /// - Returns: URL to the output file or nil if group container not found
-    func getOutputFilePath(groupID: String) -> URL? {
-        return RuleSetHelper.getOutputFilePath(
-            for: self,
-            groupID: groupID
-        )
-    }
-    
-    /// Get source file path in bundle
-    /// - Parameter bundle: Bundle to search in (default: .main)
-    /// - Returns: URL to the source file or nil if not found
-    func getSourceFilePath(in bundle: Bundle = .main) -> URL? {
-        return RuleSetHelper.getSourceFilePath(
-            for: self,
-            in: bundle
-        )
-    }
-    
-    /// Write rules to App Group container
-    /// - Parameters:
-    ///   - rules: JSON string with rules
-    ///   - groupID: App Group identifier
-    /// - Throws: ContentBlockerError if write fails
-    func writeRules(_ rules: String, groupID: String) throws {
-        try RuleSetHelper.writeRules(
-            rules,
-            for: self,
-            groupID: groupID
-        )
-    }
-}
-
-// MARK: - Rule Set Helper
-
-/// Helper class with static methods for working with RuleSetType
-public enum RuleSetHelper {
-    
-    /// Get file path in App Group container
-    public static func getOutputFilePath(for ruleSet: RuleSetType, groupID: String) -> URL? {
-        let fileManager = FileManager.default
-        guard let groupURL = fileManager.containerURL(
+    /// Get output file path in App Group container
+    /// - Returns: URL to the output JSON file or nil if group container not found
+    func getOutputFilePath() -> URL? {
+        guard let groupURL = FileManager.default.containerURL(
             forSecurityApplicationGroupIdentifier: groupID
         ) else {
             return nil
         }
-        return groupURL.appendingPathComponent("\(ruleSet.outputFileName).json")
+        return groupURL.appendingPathComponent("\(outputFileName).json")
     }
     
     /// Get source file path in bundle
-    public static func getSourceFilePath(for ruleSet: RuleSetType, in bundle: Bundle = .main) -> URL? {
-        return bundle.path(forResource: ruleSet.sourceFileName, ofType: "txt")
+    /// - Parameter bundle: Bundle to search in (default: .main)
+    /// - Returns: URL to the source TXT file or nil if not found
+    func getSourceFilePath(in bundle: Bundle = .main) -> URL? {
+        return bundle.path(forResource: sourceFileName, ofType: "txt")
             .flatMap { URL(fileURLWithPath: $0) }
     }
     
     /// Write rules to App Group container
-    public static func writeRules(_ rules: String, for ruleSet: RuleSetType, groupID: String) throws {
-        guard let filePath = getOutputFilePath(for: ruleSet, groupID: groupID) else {
+    /// - Parameter rules: JSON string with rules
+    /// - Throws: ContentBlockerError if write fails
+    func writeRules(_ rules: String) throws {
+        guard let filePath = getOutputFilePath() else {
             throw ContentBlockerError.invalidGroupID(groupID)
         }
-        
-        let fileManager = FileManager.default
         
         // Write atomically
         try rules.write(to: filePath, atomically: true, encoding: .utf8)
@@ -118,12 +85,8 @@ public enum RuleSetHelper {
         try fileHandle.synchronize()
         try fileHandle.close()
         
-        // Verify
-        if fileManager.fileExists(atPath: filePath.path) {
-            let attributes = try? fileManager.attributesOfItem(atPath: filePath.path)
-            let fileSize = attributes?[.size] as? Int64 ?? 0
-            _ = fileSize // Suppress warning
-        } else {
+        // Verify file exists
+        guard FileManager.default.fileExists(atPath: filePath.path) else {
             throw ContentBlockerError.fileNotFoundAfterWrite(filePath)
         }
     }

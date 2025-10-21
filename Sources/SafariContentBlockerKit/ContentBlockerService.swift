@@ -38,7 +38,7 @@ public class ContentBlockerService {
     
     /// Get file URL for specific rule set
     public func getFileURL(for ruleSet: RuleSetType) -> URL? {
-        return ruleSet.getOutputFilePath(groupID: configuration.appGroupID)
+        return ruleSet.getOutputFilePath()
     }
     
     /// Find rule set by extension bundle ID
@@ -126,7 +126,7 @@ public class ContentBlockerService {
                 progress: nil
             )
             
-            try ruleSet.writeRules(result.safariRulesJSON, groupID: configuration.appGroupID)
+            try ruleSet.writeRules(result.safariRulesJSON)
             upsertRuleInCache(result.safariRulesJSON, for: ruleSet)
             
         } catch {
@@ -228,7 +228,7 @@ public class ContentBlockerService {
         guard let emptyJSON = convertRulesToJSON([emptyRule]) else { return }
         
         for ruleSet in configuration.ruleSets {
-            try? ruleSet.writeRules(emptyJSON, groupID: configuration.appGroupID)
+            try? ruleSet.writeRules(emptyJSON)
         }
         
         await reloadExtensions(maxRetries: 2)
@@ -239,7 +239,7 @@ public class ContentBlockerService {
         guard let emptyJSON = convertRulesToJSON([emptyRule]) else { return }
         
         for ruleSet in configuration.ruleSets {
-            try? ruleSet.writeRules(emptyJSON, groupID: configuration.appGroupID)
+            try? ruleSet.writeRules(emptyJSON)
         }
         
         await reloadExtensions(maxRetries: 2)
@@ -248,11 +248,11 @@ public class ContentBlockerService {
     private func saveConvertedRulesToGroup(_ rules: [String]) async {
         for (index, ruleSet) in configuration.ruleSets.enumerated() {
             if let rule = rules[safe: index] {
-                try? ruleSet.writeRules(rule, groupID: configuration.appGroupID)
+                try? ruleSet.writeRules(rule)
             } else {
                 let emptyRule = createEmptyRule()
                 if let emptyJSON = convertRulesToJSON([emptyRule]) {
-                    try? ruleSet.writeRules(emptyJSON, groupID: configuration.appGroupID)
+                    try? ruleSet.writeRules(emptyJSON)
                 }
             }
         }

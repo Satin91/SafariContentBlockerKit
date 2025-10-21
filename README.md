@@ -56,6 +56,7 @@ enum MyRuleSets: String, CaseIterable, RuleSetType {
     case adBlock
     case privacy
     
+    var groupID: String { "group.com.yourapp" }
     var identifier: String { rawValue }
     
     var extensionBundleID: String {
@@ -180,7 +181,8 @@ print("JSON: \(result.safariRulesJSON)")
 Define your content blocking rules using a protocol-based approach:
 
 ```swift
-public protocol RuleSetType {
+public protocol RuleSetType: Equatable {
+    var groupID: String { get }
     var identifier: String { get }
     var extensionBundleID: String { get }
     var sourceFileName: String { get }
@@ -192,14 +194,16 @@ public protocol RuleSetType {
 - ✅ Type-safe enum-based approach
 - ✅ Compile-time checks for all cases
 - ✅ Easy to iterate with `allCases`
-- ✅ Centralized configuration
-- ✅ Helper methods via protocol extensions
+- ✅ Centralized configuration with groupID
+- ✅ Self-sufficient protocol extensions (no helper needed)
+- ✅ Equatable for comparison operations
 
 **Example:**
 ```swift
 enum MyRuleSets: String, CaseIterable, RuleSetType {
     case adBlock, privacy, trackers
     
+    var groupID: String { "group.com.app" }
     var identifier: String { rawValue }
     var extensionBundleID: String {
         "com.app.extension.\(rawValue)"
@@ -209,6 +213,11 @@ enum MyRuleSets: String, CaseIterable, RuleSetType {
     }
     var outputFileName: String { rawValue }
 }
+
+// Usage - protocol is self-sufficient:
+let ruleSet = MyRuleSets.adBlock
+let url = ruleSet.getOutputFilePath()  // No groupID parameter needed!
+try ruleSet.writeRules(jsonString)      // groupID is built-in
 ```
 
 ### ContentBlockerService
