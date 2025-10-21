@@ -28,7 +28,7 @@ let package = Package(
             ],
             path: "Sources/SafariContentBlockerKit",
             resources: [
-                .copy("ContentBlocker/Resources")
+                .process("ContentBlocker/Resources")
             ]
         )
     ]
