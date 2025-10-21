@@ -28,7 +28,7 @@ import Foundation
 ///     var outputFileName: String { rawValue }
 /// }
 /// ```
-public protocol RuleSetType: Equatable {
+public protocol RuleSetType {
     /// App Group identifier for shared container
     var groupID: String { get }
     

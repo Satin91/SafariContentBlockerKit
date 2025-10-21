@@ -37,7 +37,7 @@ public class ContentBlockerService {
     }
     
     /// Get file URL for specific rule set
-    public func getFileURL<T: RuleSetType>(for ruleSet: T) -> URL? {
+    public func getFileURL(for ruleSet: any RuleSetType) -> URL? {
         return ruleSet.getOutputFilePath()
     }
     
@@ -109,7 +109,7 @@ public class ContentBlockerService {
         await reloadExtensions(maxRetries: 3)
     }
     
-    private func convertAndSaveRules<T: RuleSetType>(for ruleSet: T) async {
+    private func convertAndSaveRules(for ruleSet: any RuleSetType) async {
         guard let sourcePath = ruleSet.getSourceFilePath(in: configuration.sourceBundle) else {
             return
         }
@@ -135,7 +135,7 @@ public class ContentBlockerService {
     
     // MARK: - Cache Management
     
-    private func upsertRuleInCache<T: RuleSetType>(_ jsonRule: String, for ruleSet: T) {
+    private func upsertRuleInCache(_ jsonRule: String, for ruleSet: any RuleSetType) {
         var cached = loadCachedRules() ?? []
         
         let requiredCount = configuration.ruleSets.count
@@ -143,7 +143,8 @@ public class ContentBlockerService {
             cached.append(contentsOf: Array(repeating: "", count: requiredCount - cached.count))
         }
         
-        if let idx = configuration.ruleSets.firstIndex(of: ruleSet) {
+        // Compare by identifier instead of using Equatable
+        if let idx = configuration.ruleSets.firstIndex(where: { $0.identifier == ruleSet.identifier }) {
             cached[idx] = jsonRule
         }
         
