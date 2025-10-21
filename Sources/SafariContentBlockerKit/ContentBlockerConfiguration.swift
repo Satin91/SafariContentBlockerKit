@@ -48,7 +48,9 @@ public struct ContentBlockerConfiguration {
 // MARK: - Predefined Configurations
 
 public extension ContentBlockerConfiguration {
-    /// Default configuration for Veilo app
+    /// Predefined configuration preset for Veilo app (example)
+    /// - Parameter appGroupID: App Group identifier
+    /// - Returns: Configuration with 6 rule sets (adBlock, privacy, banners, trackers, advanced, basic)
     static func veilo(appGroupID: String) -> ContentBlockerConfiguration {
         return ContentBlockerConfiguration(
             appGroupID: appGroupID,

@@ -79,10 +79,11 @@ public struct RuleSetType: Hashable, Codable {
     }
 }
 
-// MARK: - Predefined Rule Sets for Veilo
+// MARK: - Predefined Rule Sets
 
 public extension RuleSetType {
-    /// Predefined rule sets for Veilo app
+    /// Predefined rule sets preset for Veilo app (example)
+    /// - Returns: Array of 6 rule sets covering different blocking categories
     static func veiloRuleSets() -> [RuleSetType] {
         return [
             RuleSetType(
