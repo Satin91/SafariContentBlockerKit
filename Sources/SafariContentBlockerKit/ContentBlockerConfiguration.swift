@@ -44,3 +44,20 @@ public struct ContentBlockerConfiguration {
         self.maxJsonSizeBytes = maxJsonSizeBytes
     }
 }
+
+// MARK: - Extension Helper
+
+public extension ContentBlockerConfiguration {
+    /// Create configuration from App Group ID and rule sets array
+    /// This is a convenience initializer for use in Safari extensions
+    /// - Parameters:
+    ///   - appGroupID: App Group identifier
+    ///   - ruleSets: Array of rule sets (can be passed from main app via shared UserDefaults or hardcoded)
+    /// - Returns: Configuration instance
+    static func fromRuleSets(appGroupID: String, ruleSets: [RuleSetType]) -> ContentBlockerConfiguration {
+        return ContentBlockerConfiguration(
+            appGroupID: appGroupID,
+            ruleSets: ruleSets
+        )
+    }
+}

@@ -41,6 +41,21 @@ public class ContentBlockerService {
         return ruleSet.getOutputFilePath(groupID: configuration.appGroupID)
     }
     
+    /// Find rule set by extension bundle ID
+    /// - Parameter bundleID: Safari extension bundle identifier
+    /// - Returns: Matching RuleSetType or nil
+    public func ruleSet(forBundleID bundleID: String) -> RuleSetType? {
+        return configuration.ruleSets.first { $0.extensionBundleID == bundleID }
+    }
+    
+    /// Get file URL for extension with current bundle ID (for Safari extensions)
+    /// - Returns: URL to the rules file, or fallback empty rules if not found
+    public func getFileURLForCurrentExtension() -> URL? {
+        guard let bundleID = Bundle.main.bundleIdentifier else { return nil }
+        guard let ruleSet = ruleSet(forBundleID: bundleID) else { return nil }
+        return getFileURL(for: ruleSet)
+    }
+    
     /// Apply or remove blocking rules
     /// - Parameter isEnabled: true to enable, false to disable
     /// - Returns: true if successful, false if cancelled
