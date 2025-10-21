@@ -1,6 +1,6 @@
 //
 //  ContentBlockerService.swift
-//  VeiloKit
+//  SafariContentBlockerKit
 //
 //  Originally created by AdGuard Team (adapted for iOS)
 //  Modified by Artur Kulik for universal usage

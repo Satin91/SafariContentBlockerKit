@@ -1,6 +1,6 @@
 //
 //  ContentBlockerError.swift
-//  VeiloKit
+//  SafariContentBlockerKit
 //
 //  Errors for ContentBlockerService
 //  Created by Artur Kulik on 21.10.2025

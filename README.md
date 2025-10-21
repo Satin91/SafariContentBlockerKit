@@ -46,12 +46,12 @@ Add to your target:
 
 ## 🚀 Usage
 
-### Quick Start for Veilo App
+### Quick Start (Example with Veilo App)
 
 ```swift
 import SafariContentBlockerKit
 
-// 1. Create configuration
+// 1. Create configuration using predefined Veilo preset
 let configuration = ContentBlockerConfiguration.veilo(
     appGroupID: "group.com.yourapp.adblocker"
 )
@@ -216,7 +216,7 @@ YourApp.app/
 
 ### Output Files (App Group)
 
-VeiloKit saves converted rules to App Group container:
+SafariContentBlockerKit saves converted rules to App Group container:
 
 ```
 group.com.yourapp/
@@ -247,7 +247,7 @@ Task(priority: .utility) {
 
 ### Rule Set Examples
 
-**Veilo predefined sets:**
+**Predefined Veilo rule sets** (ready to use):
 ```swift
 let ruleSets = RuleSetType.veiloRuleSets()
 // Includes: adBlock, privacy, banners, trackers, advanced, basic
@@ -289,7 +289,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Authors
 
-- **Артур Кулик** - iOS adaptations, universal service layer, BackgroundTaskService
+- **Artur Kulik** - iOS adaptations, universal service layer, BackgroundTaskService
 - **AdGuard Team** - Original SafariConverterLib (macOS)
 
 ## 🙏 Acknowledgments

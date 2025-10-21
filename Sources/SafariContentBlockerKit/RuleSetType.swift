@@ -1,6 +1,6 @@
 //
 //  RuleSetType.swift
-//  VeiloKit
+//  SafariContentBlockerKit
 //
 //  Universal rule set type for content blocking
 //  Created by Artur Kulik on 21.10.2025
