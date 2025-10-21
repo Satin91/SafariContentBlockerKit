@@ -3,7 +3,7 @@
 //  VeiloKit
 //
 //  Universal rule set type for content blocking
-//  Created by Артур Кулик on 21.10.2025
+//  Created by Artur Kulik on 21.10.2025
 //
 
 import Foundation
@@ -73,7 +73,6 @@ public struct RuleSetType: Hashable, Codable {
         if fileManager.fileExists(atPath: filePath.path) {
             let attributes = try? fileManager.attributesOfItem(atPath: filePath.path)
             let fileSize = attributes?[.size] as? Int64 ?? 0
-            print("✅ \(identifier) saved: \(filePath.path) (size: \(fileSize) bytes)")
         } else {
             throw ContentBlockerError.fileNotFoundAfterWrite(filePath)
         }

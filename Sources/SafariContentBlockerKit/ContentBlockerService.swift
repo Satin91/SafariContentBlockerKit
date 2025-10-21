@@ -3,7 +3,7 @@
 //  VeiloKit
 //
 //  Originally created by AdGuard Team (adapted for iOS)
-//  Modified by Артур Кулик for universal usage
+//  Modified by Artur Kulik for universal usage
 //
 
 import Foundation
@@ -33,7 +33,6 @@ public class ContentBlockerService {
     public func cancelAllOperations() {
         if isEnabling {
             shouldCancelOperation = true
-            print("🛑 Operation cancelled")
         }
     }
     
@@ -57,23 +56,19 @@ public class ContentBlockerService {
             shouldCancelOperation = false
             
             if wasCancelled {
-                print("⚠️ Cancelled: rolling back to empty rules")
                 await rollbackAll()
                 return false
             }
             
-            print("✅ Content blocker enabled")
             return true
         } else {
             await generateEmptyRules()
-            print("✅ Content blocker disabled")
             return true
         }
     }
     
     /// Convert and save all rules (for preloading)
     public func convertAndSaveAllRules() async {
-        print("🔄 Starting parallel rule conversion...")
         
         await withTaskGroup(of: Void.self) { group in
             for ruleSet in configuration.ruleSets {
@@ -83,7 +78,6 @@ public class ContentBlockerService {
             }
         }
         
-        print("✅ All rules converted")
     }
     
     // MARK: - Private Methods
@@ -91,20 +85,17 @@ public class ContentBlockerService {
     private func enableContentBlocker() async {
         // Check cache first
         if let cachedRules = loadCachedRules() {
-            print("📦 Applying cached rules")
             await saveConvertedRulesToGroup(cachedRules)
             await reloadExtensions(maxRetries: 2)
             return
         }
         
-        print("🔄 Converting rules...")
         await convertAndSaveAllRules()
         await reloadExtensions(maxRetries: 3)
     }
     
     private func convertAndSaveRules(for ruleSet: RuleSetType) async {
         guard let sourcePath = ruleSet.getSourceFilePath(in: configuration.sourceBundle) else {
-            print("❌ Source file not found: \(ruleSet.sourceFileName)")
             return
         }
         
@@ -124,7 +115,6 @@ public class ContentBlockerService {
             upsertRuleInCache(result.safariRulesJSON, for: ruleSet)
             
         } catch {
-            print("❌ Error processing \(ruleSet.identifier): \(error)")
         }
     }
     
@@ -157,7 +147,6 @@ public class ContentBlockerService {
             let jsonData = try JSONSerialization.data(withJSONObject: rules, options: .prettyPrinted)
             try jsonData.write(to: cacheURL)
         } catch {
-            print("❌ Cache error: \(error)")
         }
     }
     
@@ -174,7 +163,6 @@ public class ContentBlockerService {
             let jsonData = try Data(contentsOf: cacheURL)
             return try JSONSerialization.jsonObject(with: jsonData) as? [String]
         } catch {
-            print("❌ Cache error: \(error)")
             return nil
         }
     }
@@ -195,7 +183,6 @@ public class ContentBlockerService {
         }
         
         let elapsed = Date().timeIntervalSince(startTime)
-        print("✅ Reload complete in \(String(format: "%.1f", elapsed))s")
     }
     
     @MainActor
@@ -211,11 +198,9 @@ public class ContentBlockerService {
             
             do {
                 try await SFContentBlockerManager.reloadContentBlocker(withIdentifier: bundle)
-                print("✅ Reloaded \(bundle)")
                 return
             } catch {
                 if attempts == maxRetries {
-                    print("❌ Failed to reload \(bundle)")
                 }
             }
         }
@@ -274,7 +259,6 @@ public class ContentBlockerService {
             let jsonData = try JSONSerialization.data(withJSONObject: rules, options: .prettyPrinted)
             return String(data: jsonData, encoding: .utf8)
         } catch {
-            print("❌ JSON conversion error: \(error)")
             return nil
         }
     }

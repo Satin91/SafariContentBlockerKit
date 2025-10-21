@@ -2,15 +2,15 @@
 //  SafariContentBlockerKit.swift
 //  SafariContentBlockerKit
 //
-//  Swift Package для Safari Content Blocker
-//  Created by Артур Кулик on 21.10.2025
+//  Swift Package for Safari Content Blocker
+//  Created by Artur Kulik on 21.10.2025
 //
 
 import Foundation
 
-/// SafariContentBlockerKit - универсальная библиотека для блокировки контента в Safari
+/// SafariContentBlockerKit - Universal library for content blocking in Safari
 public struct SafariContentBlockerKit {
-    /// Версия пакета
+    /// Package version
     public static let version = "1.0.0"
     
     public init() {}

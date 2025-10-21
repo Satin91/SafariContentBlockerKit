@@ -1,15 +1,15 @@
 //
 //  BackgroundTaskService.swift
-//  VeiloKit
+//  SafariContentBlockerKit
 //
-//  Created by Артур Кулик on 21.10.2025.
+//  Created by Artur Kulik on 21.10.2025
 //
 
 import UIKit
 import Foundation
 
-/// Сервис для выполнения операций с поддержкой фонового режима
-/// Автоматически управляет жизненным циклом фоновых задач iOS
+/// Service for executing operations with background mode support
+/// Automatically manages iOS background task lifecycle
 public final class BackgroundTaskService {
     
     // MARK: - Private Properties
@@ -21,13 +21,13 @@ public final class BackgroundTaskService {
     
     // MARK: - Public Methods
     
-    /// Выполняет операцию с поддержкой фонового режима
-    /// iOS предоставляет ~30 секунд для завершения операции после сворачивания приложения
+    /// Executes operation with background mode support
+    /// iOS provides ~30 seconds to complete after app enters background
     ///
-    /// - Parameter operation: Асинхронная операция для выполнения
-    /// - Returns: Результат выполнения операции
+    /// - Parameter operation: Asynchronous operation to execute
+    /// - Returns: Result of the operation
     ///
-    /// Пример использования:
+    /// Example usage:
     /// ```swift
     /// let result = await backgroundTaskService.execute {
     ///     await someAsyncOperation()
@@ -44,12 +44,12 @@ public final class BackgroundTaskService {
         return result
     }
     
-    /// Выполняет операцию с поддержкой фонового режима и обработкой ошибок
+    /// Executes operation with background mode support and error handling
     ///
-    /// - Parameter operation: Асинхронная операция для выполнения
-    /// - Throws: Ошибку, выброшенную операцией
+    /// - Parameter operation: Asynchronous operation to execute
+    /// - Throws: Error thrown by the operation
     ///
-    /// Пример использования:
+    /// Example usage:
     /// ```swift
     /// try await backgroundTaskService.execute {
     ///     try await someFunctionThatThrows()
@@ -69,39 +69,26 @@ public final class BackgroundTaskService {
     
     // MARK: - Private Methods
     
-    /// Начинает фоновую задачу
+    /// Begins background task
     private func beginBackgroundTask() {
         lock.lock()
         defer { lock.unlock() }
         
-        // Если задача уже запущена, не создаем новую
         guard backgroundTaskID == .invalid else {
-            print("⚠️ Фоновая задача уже запущена")
             return
         }
         
         backgroundTaskID = UIApplication.shared.beginBackgroundTask { [weak self] in
-            // Вызывается когда время истекло (~30 секунд)
-            print("⚠️ Фоновая задача истекла, принудительное завершение")
             self?.endBackgroundTask()
-        }
-        
-        if backgroundTaskID != .invalid {
-            print("✅ Фоновая задача начата (ID: \(backgroundTaskID.rawValue))")
-        } else {
-            print("❌ Не удалось начать фоновую задачу")
         }
     }
     
-    /// Завершает фоновую задачу
+    /// Ends background task
     private func endBackgroundTask() {
         lock.lock()
         defer { lock.unlock() }
         
         guard backgroundTaskID != .invalid else { return }
-        
-        let taskID = backgroundTaskID
-        print("✅ Фоновая задача завершена (ID: \(taskID.rawValue))")
         
         UIApplication.shared.endBackgroundTask(backgroundTaskID)
         backgroundTaskID = .invalid
@@ -111,9 +98,9 @@ public final class BackgroundTaskService {
 // MARK: - Convenience Extensions
 
 public extension BackgroundTaskService {
-    /// Выполняет операцию без возврата значения
+    /// Executes operation without return value
     ///
-    /// Пример использования:
+    /// Example usage:
     /// ```swift
     /// await backgroundTaskService.execute {
     ///     await performLongOperation()
@@ -125,4 +112,3 @@ public extension BackgroundTaskService {
         }
     }
 }
-

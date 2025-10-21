@@ -3,7 +3,7 @@
 //  VeiloKit
 //
 //  Errors for ContentBlockerService
-//  Created by Артур Кулик on 21.10.2025
+//  Created by Artur Kulik on 21.10.2025
 //
 
 import Foundation
