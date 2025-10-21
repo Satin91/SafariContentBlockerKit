@@ -30,10 +30,7 @@ let package = Package(
             resources: [
                 .copy("ContentBlocker/Resources")
             ]
-        ),
-        .testTarget(
-            name: "VeiloKitTests",
-            dependencies: ["VeiloKit"]),
+        )
     ]
 )
 
