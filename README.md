@@ -51,26 +51,39 @@ Add to your target:
 ```swift
 import SafariContentBlockerKit
 
-// 1. Define your rule sets
-let ruleSets = [
-    RuleSetType(
-        identifier: "adblock",
-        extensionBundleID: "com.yourapp.extension.adblocker",
-        sourceFileName: "adblock_rules_adBlock",
-        outputFileName: "adBlock"
-    ),
-    RuleSetType(
-        identifier: "privacy",
-        extensionBundleID: "com.yourapp.extension.privacy",
-        sourceFileName: "adblock_rules_privacy",
-        outputFileName: "privacy"
-    )
-]
+// 1. Define your rule sets using enum (recommended approach)
+enum MyRuleSets: String, CaseIterable, RuleSetType {
+    case adBlock
+    case privacy
+    
+    var identifier: String { rawValue }
+    
+    var extensionBundleID: String {
+        switch self {
+        case .adBlock: return "com.yourapp.extension.adblocker"
+        case .privacy: return "com.yourapp.extension.privacy"
+        }
+    }
+    
+    var sourceFileName: String {
+        switch self {
+        case .adBlock: return "adblock_rules_adBlock"
+        case .privacy: return "adblock_rules_privacy"
+        }
+    }
+    
+    var outputFileName: String {
+        switch self {
+        case .adBlock: return "adBlock"
+        case .privacy: return "privacy"
+        }
+    }
+}
 
 // 2. Create configuration
 let configuration = ContentBlockerConfiguration(
     appGroupID: "group.com.yourapp.adblocker",
-    ruleSets: ruleSets
+    ruleSets: MyRuleSets.allCases.map { $0 as any RuleSetType }
 )
 
 // 3. Initialize service
@@ -83,36 +96,36 @@ let success = await contentBlockerService.applyBlockingState(true)
 await contentBlockerService.convertAndSaveAllRules()
 ```
 
-### Custom Configuration
+### Safari Extension Usage
+
+In your Safari extension's `ContentBlockerRequestHandler`:
 
 ```swift
 import SafariContentBlockerKit
 
-// Define your custom rule sets
-let customRuleSets = [
-    RuleSetType(
-        identifier: "myAdBlock",
-        extensionBundleID: "com.myapp.extension.adblocker",
-        sourceFileName: "adblock_rules",
-        outputFileName: "adblock"
-    ),
-    RuleSetType(
-        identifier: "myPrivacy",
-        extensionBundleID: "com.myapp.extension.privacy",
-        sourceFileName: "privacy_rules",
-        outputFileName: "privacy"
-    )
-]
-
-// Create custom configuration
-let configuration = ContentBlockerConfiguration(
-    appGroupID: "group.com.myapp",
-    ruleSets: customRuleSets,
-    safariVersion: .safari16,
-    advancedBlocking: true
-)
-
-let service = ContentBlockerService(configuration: configuration)
+class ContentBlockerRequestHandler: NSObject, NSExtensionRequestHandling {
+    func beginRequest(with context: NSExtensionContext) {
+        // Use the same enum from your main app
+        let configuration = ContentBlockerConfiguration(
+            appGroupID: "group.com.yourapp",
+            ruleSets: MyRuleSets.allCases.map { $0 as any RuleSetType }
+        )
+        
+        let service = ContentBlockerService(configuration: configuration)
+        
+        // Automatically finds rules for current extension by bundle ID
+        guard let rulesURL = service.getFileURLForCurrentExtension() else {
+            context.cancelRequest(withError: NSError(...))
+            return
+        }
+        
+        let attachment = NSItemProvider(contentsOf: rulesURL)!
+        let item = NSExtensionItem()
+        item.attachments = [attachment]
+        
+        context.completeRequest(returningItems: [item], completionHandler: nil)
+    }
+}
 ```
 
 ### BackgroundTaskService
@@ -161,6 +174,42 @@ print("JSON: \(result.safariRulesJSON)")
 ```
 
 ## 📋 Components
+
+### RuleSetType Protocol
+
+Define your content blocking rules using a protocol-based approach:
+
+```swift
+public protocol RuleSetType {
+    var identifier: String { get }
+    var extensionBundleID: String { get }
+    var sourceFileName: String { get }
+    var outputFileName: String { get }
+}
+```
+
+**Benefits:**
+- ✅ Type-safe enum-based approach
+- ✅ Compile-time checks for all cases
+- ✅ Easy to iterate with `allCases`
+- ✅ Centralized configuration
+- ✅ Helper methods via protocol extensions
+
+**Example:**
+```swift
+enum MyRuleSets: String, CaseIterable, RuleSetType {
+    case adBlock, privacy, trackers
+    
+    var identifier: String { rawValue }
+    var extensionBundleID: String {
+        "com.app.extension.\(rawValue)"
+    }
+    var sourceFileName: String {
+        "adblock_rules_\(rawValue)"
+    }
+    var outputFileName: String { rawValue }
+}
+```
 
 ### ContentBlockerService
 
