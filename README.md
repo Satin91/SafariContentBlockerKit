@@ -4,7 +4,7 @@ Swift Package with universal utilities and content blocking services for iOS Saf
 
 [![Swift Version](https://img.shields.io/badge/Swift-5.9-orange.svg)](https://swift.org)
 [![Platform](https://img.shields.io/badge/Platform-iOS%2015%2B-blue.svg)](https://developer.apple.com/ios/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-GPL--3.0-green.svg)](LICENSE)
 
 ## 📦 Features
 
@@ -361,16 +361,29 @@ do {
 
 ## 📝 Attribution
 
-This package includes modified code from [AdguardTeam/SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib) (MIT License). See [NOTICE.md](NOTICE.md) for detailed attribution.
+This package includes modified code from [AdguardTeam/SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib) (**GPL-3.0 License**). See [NOTICE.md](NOTICE.md) for detailed attribution.
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+**GPL-3.0 License** - see [LICENSE](LICENSE) file for details.
+
+This project is licensed under GPL-3.0 to comply with the license of the original SafariConverterLib code from AdGuard Team.
+
+### What does this mean?
+
+- ✅ You can use, modify, and distribute this code
+- ✅ You can use it in commercial projects
+- ⚠️ If you distribute modified versions, you must:
+  - Keep the same GPL-3.0 license
+  - Provide source code to your users
+  - Document your changes
+
+For more information, visit: https://www.gnu.org/licenses/gpl-3.0.html
 
 ## 👨‍💻 Authors
 
 - **Artur Kulik** - iOS adaptations, universal service layer, BackgroundTaskService
-- **AdGuard Team** - Original SafariConverterLib (macOS)
+- **AdGuard Team** - Original SafariConverterLib (GPL-3.0)
 
 ## 🙏 Acknowledgments
 
