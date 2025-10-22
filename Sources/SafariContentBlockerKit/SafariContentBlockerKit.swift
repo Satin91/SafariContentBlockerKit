@@ -3,7 +3,6 @@
 //  SafariContentBlockerKit
 //
 //  Swift Package for Safari Content Blocker
-//  Created by Artur Kulik on 21.10.2025
 //
 
 import Foundation

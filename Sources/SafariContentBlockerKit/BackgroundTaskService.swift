@@ -2,8 +2,6 @@
 //  BackgroundTaskService.swift
 //  SafariContentBlockerKit
 //
-//  Created by Artur Kulik on 21.10.2025
-//
 
 import UIKit
 import Foundation

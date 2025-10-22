@@ -3,7 +3,6 @@
 //  SafariContentBlockerKit
 //
 //  Universal rule set protocol for content blocking
-//  Created by Artur Kulik on 21.10.2025
 //
 
 import Foundation
