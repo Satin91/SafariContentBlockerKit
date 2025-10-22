@@ -15,7 +15,7 @@ public enum PublicSuffixList {
     /// ByteArraySuffixTrie loaded from the bundled common rules binary file
     private static let commonTrie: ByteArraySuffixTrie = {
         guard
-            let url = Bundle.main.url(
+            let url = Bundle.module.url(
                 forResource: "common",
                 withExtension: "bin"
             ),
@@ -29,7 +29,7 @@ public enum PublicSuffixList {
     /// ByteArraySuffixTrie loaded from the bundled negated rules binary file
     private static let negatedTrie: ByteArraySuffixTrie = {
         guard
-            let url = Bundle.main.url(
+            let url = Bundle.module.url(
                 forResource: "negated",
                 withExtension: "bin"
             ),
@@ -43,7 +43,7 @@ public enum PublicSuffixList {
     /// ByteArraySuffixTrie loaded from the bundled asterisk rules binary file
     private static let asteriskTrie: ByteArraySuffixTrie = {
         guard
-            let url = Bundle.main.url(
+            let url = Bundle.module.url(
                 forResource: "asterisk",
                 withExtension: "bin"
             ),
