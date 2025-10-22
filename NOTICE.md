@@ -40,6 +40,60 @@ licensed under GPL-3.0. Therefore, SafariContentBlockerKit is licensed under GPL
 For the complete license text, see the [LICENSE](LICENSE) file or visit:
 https://www.gnu.org/licenses/gpl-3.0.html
 
+### Embedded Dependencies in SafariConverterLib
+
+SafariConverterLib includes the following third-party libraries:
+
+- **swift-psl** by ameshkov (MIT License) - See dedicated section below
+
+---
+
+## swift-psl
+
+SafariContentBlockerKit includes code from the **swift-psl** library (embedded in SafariConverterLib).
+
+- **Original Project**: [ameshkov/swift-psl](https://github.com/ameshkov/swift-psl)
+- **License**: **MIT License**
+- **Copyright**: © ameshkov
+- **Location**: `ContentBlocker/PSL/` directory
+
+### MIT License
+
+```
+MIT License
+
+Copyright (c) ameshkov
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+### Description
+
+swift-psl is a high performance Swift library for working with the Public Suffix List.
+The Public Suffix List is used to identify the registrable domain portion of a hostname.
+
+### License Compatibility
+
+The MIT License is compatible with GPL-3.0. swift-psl code is embedded in SafariConverterLib 
+and therefore in SafariContentBlockerKit. The GPL-3.0 license applies to the combined work,
+while swift-psl retains its original MIT License.
+
 ---
 
 ## SafariContentBlockerKit Original Components
@@ -118,4 +172,5 @@ code, while PunycodeSwift remains under its original MIT License.
 
 Special thanks to:
 - The **AdGuard Team** for their excellent work on SafariConverterLib, which made this iOS adaptation possible
+- **ameshkov** for swift-psl, providing high-performance Public Suffix List implementation
 - **gumob** for PunycodeSwift, providing robust internationalized domain name support

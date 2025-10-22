@@ -688,5 +688,10 @@ This software incorporates code from the following projects:
    Copyright (c) 2025 SafariContentBlockerKit Contributors
    Licensed under GPL-3.0
 
+3. swift-psl (embedded in SafariConverterLib)
+   Copyright (c) ameshkov
+   Licensed under MIT License
+   https://github.com/ameshkov/swift-psl
+
 All modifications and original components are also licensed
 under GPL-3.0 to comply with the original SafariConverterLib license.
