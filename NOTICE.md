@@ -7,7 +7,7 @@ SafariContentBlockerKit includes modified code from the **SafariConverterLib** p
 - **Original Project**: [AdguardTeam/SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib)
 - **Original License**: **GPL-3.0** (GNU General Public License v3.0)
 - **Copyright**: © 2018-2024 AdGuard Team
-- **Modifications by**: Artur Kulik (2025)
+- **Modifications by**: SafariContentBlockerKit Contributors (2025)
 
 ### Modifications Made:
 
@@ -46,12 +46,12 @@ https://www.gnu.org/licenses/gpl-3.0.html
 
 The following components are original work created for SafariContentBlockerKit:
 
-- **BackgroundTaskService.swift** - Original work by Artur Kulik
-- **ContentBlockerService.swift** - Original work by Artur Kulik (uses AdGuard converter)
-- **RuleSetType.swift** - Original work by Artur Kulik  
-- **ContentBlockerConfiguration.swift** - Original work by Artur Kulik
-- **ContentBlockerError.swift** - Original work by Artur Kulik
-- **SafariContentBlockerKit.swift** - Original work by Artur Kulik
+- **BackgroundTaskService.swift** - Original work for iOS adaptation
+- **ContentBlockerService.swift** - Original work for iOS adaptation (uses AdGuard converter)
+- **RuleSetType.swift** - Original work for iOS adaptation
+- **ContentBlockerConfiguration.swift** - Original work for iOS adaptation
+- **ContentBlockerError.swift** - Original work for iOS adaptation
+- **SafariContentBlockerKit.swift** - Original work for iOS adaptation
 
 These components are also licensed under the **GPL-3.0 License** to comply with 
 the copyleft requirements of the original SafariConverterLib code.

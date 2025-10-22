@@ -685,8 +685,8 @@ This software incorporates code from the following projects:
    https://github.com/AdguardTeam/SafariConverterLib
 
 2. SafariContentBlockerKit (iOS adaptations and original components)
-   Copyright (c) 2025 Artur Kulik
+   Copyright (c) 2025 SafariContentBlockerKit Contributors
    Licensed under GPL-3.0
 
-All modifications and original components by Artur Kulik are also licensed
+All modifications and original components are also licensed
 under GPL-3.0 to comply with the original SafariConverterLib license.

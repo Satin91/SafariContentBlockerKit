@@ -382,7 +382,7 @@ For more information, visit: https://www.gnu.org/licenses/gpl-3.0.html
 
 ## 👨‍💻 Authors
 
-- **Artur Kulik** - iOS adaptations, universal service layer, BackgroundTaskService
+- **SafariContentBlockerKit Contributors** - iOS adaptations, universal service layer, BackgroundTaskService
 - **AdGuard Team** - Original SafariConverterLib (GPL-3.0)
 
 ## 🙏 Acknowledgments
