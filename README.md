@@ -11,7 +11,7 @@ Swift Package with universal utilities and content blocking services for iOS Saf
 - **ContentBlockerService**: Universal service for managing Safari content blocker extensions
 - **RuleSetType**: Flexible rule set management with custom configurations
 - **BackgroundTaskService**: Manage iOS background tasks with async/await support
-- **ContentBlocker**: Convert AdGuard rules to Safari Content Blocker format (iOS-adapted fork of [AdguardTeam/SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib))
+- **ContentBlocker**: Convert filter list rules to Safari Content Blocker format (iOS-adapted fork of [AdguardTeam/SafariConverterLib](https://github.com/AdguardTeam/SafariConverterLib))
 
 ## 🔧 Requirements
 
@@ -224,7 +224,7 @@ try ruleSet.writeRules(jsonString)      // groupID is built-in
 
 Universal service for managing Safari content blocker extensions:
 
-- ✅ Rule conversion (AdGuard format → Safari format)
+- ✅ Filter list conversion to Safari format
 - ✅ Extension reloading with retry logic
 - ✅ Caching for faster subsequent loads
 - ✅ App Group container management
@@ -267,7 +267,7 @@ iOS background task management:
 
 ### ContentBlockerConverter
 
-AdGuard rules → Safari Content Blocker format:
+Converts filter list rules to Safari Content Blocker format:
 
 - ✅ Network rules (blocking)
 - ✅ Cosmetic rules (element hiding)
@@ -280,7 +280,7 @@ AdGuard rules → Safari Content Blocker format:
 
 ### Source Files Required
 
-Your app bundle should include `.txt` files with AdGuard rules:
+Your app bundle should include filter list files (`.txt` format):
 
 ```
 YourApp.app/
